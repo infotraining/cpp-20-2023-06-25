@@ -6,29 +6,28 @@ Proszę wybrać jedną z poniższych opcji:
 
 ### Lokalna
 
-Przed szkoleniem należy zainstalować:
+Przed szkoleniem należy zainstalować jeden z kompilatorów wspierających C++20:
 
-#### Kompilator C++ wspierający C++20 - do wyboru:
-  * Visual Studio 2022
-    * przy instalacji należy zaznaczyć opcje:
-      * Desktop development with C++
-      * C++ CMake tools for Windows
-      * vcpkg package manager
-      * C++ Modules
+#### Visual Studio 2022
+* przy instalacji należy zaznaczyć opcje:
+  * Desktop development with C++
+  * C++ CMake tools for Windows
+  * vcpkg package manager
+  * C++ Modules
 
-  * gcc-13
-    * [CMake > 3.25](https://cmake.org/)
-    * proszę sprawdzić wersję w linii poleceń        
+### gcc-13
+* [CMake > 3.25](https://cmake.org/)
+* proszę sprawdzić wersję w linii poleceń        
   
-      ```
-      cmake --version
-      ```
+  ```
+  cmake --version
+  ```
       
-    * IDE: Visual Studio Code
-      * [Visual Studio Code](https://code.visualstudio.com/)
-      * Zainstalować wtyczki
-        * C/C++ Extension Pack
-        * Live Share
+* IDE: Visual Studio Code
+  * [Visual Studio Code](https://code.visualstudio.com/)
+    * Zainstalować wtyczki
+    * C/C++ Extension Pack
+    * Live Share
 
 ### Docker + Visual Studio Code
 
