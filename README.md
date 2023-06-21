@@ -15,7 +15,7 @@ Przed szkoleniem należy zainstalować jeden z kompilatorów wspierających C++2
   * vcpkg package manager
   * C++ Modules
 
-### gcc-13
+#### gcc-13
 * [CMake > 3.25](https://cmake.org/)
 * proszę sprawdzić wersję w linii poleceń        
   
