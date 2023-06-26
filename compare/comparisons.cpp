@@ -215,6 +215,7 @@ struct Human
 
     std::strong_ordering operator<=>(const  Human& rhs) const
     {
+        // custom impl
         // if (auto  cmp_result = name <=> rhs.name; cmp_result == 0)
         // {
         //     return how_old <=> rhs.how_old;            
@@ -224,6 +225,7 @@ struct Human
         //     return cmp_result;
         // }
 
+        // shortcut with std::tie
         return std::tie(name, how_old) <=> std::tie(rhs.name, rhs.how_old);
     }
 };

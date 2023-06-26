@@ -36,24 +36,27 @@ struct SuperGadget : Gadget
     // TODO
 };
 
-// TEST_CASE("Gadget - write custom operator <=> - stronger category than auto detected")
-// {
-//     SECTION("==")
-//     {
-//         CHECK(Gadget{"ipad", 1.0} == Gadget{"ipad", 1.0});
-//     }
+TEST_CASE("Gadget - write custom operator <=> - stronger category than auto detected")
+{
+    // SECTION("==")
+    // {
+    //     CHECK(Gadget{"ipad", 1.0} == Gadget{"ipad", 1.0});
+    // }
     
-//     SECTION("<=>")
-//     {
-//         CHECK(Gadget{"ipad", 1.0} <=> Gadget{"ipad", 1.0} == std::strong_ordering::equal);
-//     }
-// }
+    // SECTION("<=>")
+    // {
+    //     auto result = Gadget{"ipad", 1.0} <=> Gadget{"ipad", 1.0};
+    //     CHECK(result == std::strong_ordering::equal);
+    // }
+}
 
-// TEST_CASE("SuperGadget - write custom operator <=> - member without compare-three-way operator")
-// {
-//     CHECK(SuperGadget{{"ipad", 1.0}, Rating{1}} != SuperGadget{{"ipad", 1.0}, Rating{2}});
-//     CHECK(SuperGadget{{"ipad", 1.0}, Rating{1}} <=> SuperGadget{{"ipad", 1.0}, Rating{2}} == std::strong_ordering::less);    
-// }
+TEST_CASE("SuperGadget - write custom operator <=> - member without compare-three-way operator")
+{
+    // CHECK(SuperGadget{{"ipad", 1.0}, Rating{1}} != SuperGadget{{"ipad", 1.0}, Rating{2}});
+
+    // auto result = SuperGadget{{"ipad", 1.0}, Rating{1}} <=> SuperGadget{{"ipad", 1.0}, Rating{2}};
+    // CHECK(result == std::strong_ordering::less);    
+}
 
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -72,11 +75,14 @@ public:
     // TODO
 };
 
-// TEST_CASE("Rating Star - implement nedded <=>")
-// {
-//     RatingStar r1{RatingValue::good};
+TEST_CASE("Rating Star - implement <=>")
+{
+    RatingStar r1{RatingValue::good};
     
-//     CHECK(r1 == RatingStar{RatingValue::good});
-//     CHECK(r1 <=> RatingStar{RatingValue::excellent} == std::strong_ordering::less);
-//     CHECK(r1 <=> RatingValue::excellent == std::strong_ordering::less);
-// }
+    // CHECK(r1 == RatingStar{RatingValue::good});
+    // auto result = r1 <=> RatingStar{RatingValue::excellent}
+    // CHECK(result == std::strong_ordering::less);
+
+    // result = r1 <=> RatingValue::excellent
+    // CHECK(result == std::strong_ordering::less);
+}
