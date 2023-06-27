@@ -4,10 +4,17 @@
 #include <map>
 #include <string>
 #include <vector>
+#include <ranges>
 
 using namespace std::literals;
 
-void print(const auto& c, std::string_view prefix = "items")
+template <typename T>
+concept PrintableRange = 
+    std::ranges::range<T> && 
+        requires (std::ranges::range_value_t<T> item)
+        { std::cout << item; };
+
+void print(const PrintableRange auto& c, std::string_view prefix = "items")
 {
     std::cout << prefix << ": [ ";
     for (const auto& item : c)
@@ -15,7 +22,12 @@ void print(const auto& c, std::string_view prefix = "items")
     std::cout << "]\n";
 }
 
-bool cmp_by_size(const auto& a, const auto& b)
+template<typename T>
+concept Sizeable = requires (T obj){
+    { obj.size() } -> std::convertible_to<size_t>;
+};
+
+bool cmp_by_size(Sizeable auto const& a, const Sizeable auto& b)
 {
     return a.size() < b.size();
 }
