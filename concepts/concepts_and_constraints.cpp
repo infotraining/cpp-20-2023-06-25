@@ -81,7 +81,7 @@ TEST_CASE("trait - IsPointer")
 
 TEST_CASE("constraints")
 {
-    //print(std::vector{1, 2, 3}, "vec");
+    // print(std::vector{1, 2, 3}, "vec");
     REQUIRE(true);
 }
 
@@ -119,18 +119,53 @@ namespace BeforeCpp20
 
 namespace Cpp20
 {
-    template <typename T>
-    T max_value(T a, T b)
+    inline namespace ver_1
     {
-        return (a < b) ? b : a;
-    }
+        template <typename T>
+        T max_value(T a, T b)
+        {
+            return (a < b) ? b : a;
+        }
 
-    template <Pointer T>
-    auto max_value(T a, T b)
+        template <typename T>
+            requires IsPointer_v<T>
+        auto max_value(T a, T b)
+        {
+            return (*a < *b) ? *b : *a;
+        }
+    } // namespace ver_1
+
+    namespace ver_2
     {
-        return (*a < *b) ? *b : *a;
-    }
-} // namespace BeforeCpp20
+        template <typename T>
+        T max_value(T a, T b)
+        {
+            return (a < b) ? b : a;
+        }
+
+        template <typename T>
+            requires Pointer<T>
+        auto max_value(T a, T b)
+        {
+            return (*a < *b) ? *b : *a;
+        }
+    } // namespace ver_2
+
+    namespace ver_3
+    {
+        template <typename T>
+        T max_value(T a, T b)
+        {
+            return (a < b) ? b : a;
+        }
+
+        template <Pointer T>            
+        auto max_value(T a, T b)
+        {
+            return (*a < *b) ? *b : *a;
+        }
+    } // namespace ver_2
+} // namespace Cpp20
 
 TEST_CASE("max_value")
 {
