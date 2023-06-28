@@ -4,9 +4,12 @@ module;
 
 export module FooMod;
 
-export void foo();
+export namespace FooMod
+{
+    void foo(); // FooMod::foo()
+}
 
-void foo()
+void FooMod::foo()
 {
     std::cout << "Hello modules\n";
 }

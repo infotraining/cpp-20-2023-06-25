@@ -2,5 +2,5 @@ import FooMod;
 
 int main()
 {
-    foo();
+    FooMod::foo();
 }
