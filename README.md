@@ -1,5 +1,9 @@
 # Szkolenie - C++20 #
 
+## Ankieta
+
+* https://forms.gle/2oNo6KFwBvg4EkZd7
+
 ## Docs
 
 * https://infotraining.github.io/docs-cpp-20
