@@ -67,11 +67,30 @@ TEST_CASE("Exercise - ranges")
 
     helpers::print(lines, "lines");
 
-    auto result = lines;
+    auto new_line_filter = [](std::string_view x){ return x != "\n"; };
+
+    // auto result = lines | std::views::drop(3) 
+    //                     | std::views::filter(new_line_filter) 
+    //                     | std::views::transform([](std::string_view x){ 
+    //                         auto pair = split(x);
+    //                         return pair.second;
+    //                     });
+
+    auto result = lines
+        | std::views::drop_while([](const auto& sv) { return sv.starts_with("#"); })
+        | std::views::filter([](const auto& sv) { return sv != "\n"; })
+        | std::views::transform([](const auto& sv) { return split(sv); })
+        | std::views::elements<1>;
+
+    //std::vector vec(result.begin(), result.end());
+
+    helpers::print(result, "result");
+
+    std::cout << "------\n";
 
     helpers::print(result, "result");
 
     auto expected_result = {"one"s, "two"s, "three"s, "four"s, "five"s, "six"s};
 
-    //CHECK(std::ranges::equal(result, expected_result));
+    CHECK(std::ranges::equal(result, expected_result));
 }
