@@ -1,48 +1,53 @@
 #include <algorithm>
 #include <catch2/catch_test_macros.hpp>
 #include <iostream>
+#include <list>
 #include <map>
+#include <set>
 #include <string>
 #include <vector>
-#include <list>
-#include <set>
 
 using namespace std::literals;
 
-int foo(int n)
+namespace Traits
 {
-    return 42 * n;
-}
+    int foo(int n)
+    {
+        return 42 * n;
+    }
 
-template <size_t N>
-struct Foo
-{
-    constexpr static int value = 42 * N;
-};
+    template <size_t N>
+    struct Foo
+    {
+        constexpr static int value = 42 * N;
+    };
 
-// template variable
-template <size_t N>
-constexpr static int Foo_v = Foo<N>::value;
+    // template variable
+    template <size_t N>
+    constexpr static int Foo_v = Foo<N>::value;
 
-//////////////////////////////////////////////
+    //////////////////////////////////////////////
 
-template <typename T>
-struct IsVoid
-{
-    constexpr static bool value = false;
-};
+    template <typename T>
+    struct IsVoid
+    {
+        constexpr static bool value = false;
+    };
 
-template <>
-struct IsVoid<void>
-{
-    constexpr static bool value = true;
-};
+    template <>
+    struct IsVoid<void>
+    {
+        constexpr static bool value = true;
+    };
 
-template <typename T>
-constexpr static bool IsVoid_v = IsVoid<T>::value;
+    template <typename T>
+    constexpr static bool IsVoid_v = IsVoid<T>::value;
+} // namespace Traits
 
 TEST_CASE("traits")
 {
+    using namespace Traits;
+    
     CHECK(foo(2) == 84);
     static_assert(Foo<2>::value == 84);
     static_assert(Foo_v<2> == 84);
@@ -87,8 +92,6 @@ TEST_CASE("constraints")
     REQUIRE(true);
 }
 
-
-
 /////////////////////////////////////////////////////////////////////
 // templates & requirements
 
@@ -120,7 +123,7 @@ namespace Cpp20
         *ptr;
         ptr == nullptr;
     };
-    
+
     namespace ver_1
     {
         template <typename T>
@@ -275,18 +278,17 @@ TEST_CASE("auto placeholder + concept")
 // requires expression
 
 template <typename T>
-concept BigInt = std::integral<T> && requires(T obj)
-{
+concept BigInt = std::integral<T> && requires(T obj) {
     requires sizeof(obj) > 4;
 };
 
-//static_assert(BigInt<char>);
-//static_assert(BigInt<std::string>);
+// static_assert(BigInt<char>);
+// static_assert(BigInt<std::string>);
 static_assert(BigInt<int64_t>);
 
 void add_to_container(auto& container, auto&& item)
 {
-    if constexpr( requires { container.push_back(std::forward<decltype(item)>(item)); } )
+    if constexpr (requires { container.push_back(std::forward<decltype(item)>(item)); })
     {
         container.push_back(std::forward<decltype(item)>(item));
     }
@@ -319,18 +321,20 @@ struct Color
 };
 
 template <typename T>
-concept Shape = requires(T obj)
-{
-    { obj.box() } -> std::same_as<BoundingBox>;
+concept Shape = requires(T obj) {
+    {
+        obj.box()
+    } -> std::same_as<BoundingBox>;
     obj.draw();
 };
- 
+
 template <typename T>
-concept ShapeWithColor = Shape<T> &&
-    requires (T obj, Color c) {
-        obj.set_color(c);
-        { obj.get_color() } -> std::same_as<Color>;
-    };
+concept ShapeWithColor = Shape<T> && requires(T obj, Color c) {
+    obj.set_color(c);
+    {
+        obj.get_color()
+    } -> std::same_as<Color>;
+};
 
 void render(const Shape auto& shp)
 {
@@ -349,7 +353,7 @@ struct IShape
     virtual ~IShape() = default;
 };
 
-struct Rect 
+struct Rect
 {
     int w, h;
 
@@ -367,7 +371,7 @@ struct Rect
     // {
     //     std::cout << "Setting color\n";
     // }
-        
+
     // Color get_color() const
     // {
     //     return Color{};
@@ -377,7 +381,7 @@ struct Rect
 // static_assert(ShapeWithColor<Rect>);
 
 TEST_CASE("subsuming concepts")
-{   
+{
     render(Rect{10, 20});
 }
 

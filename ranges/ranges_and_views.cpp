@@ -2,16 +2,16 @@
 #include <catch2/catch_test_macros.hpp>
 #include <helpers.hpp>
 #include <iostream>
+#include <iterator>
+#include <list>
 #include <ranges>
 #include <string>
 #include <vector>
-#include <iterator>
-#include <list>
 
 using namespace std::literals;
 
 /////////////////////
-// Sentinels
+// Sentinel
 
 template <auto Value>
 struct EndValue
@@ -86,7 +86,7 @@ TEST_CASE("views")
     {
         auto first_half = std::views::counted(vec.begin(), vec.size() / 2);
 
-        for(auto& item : first_half)
+        for (auto& item : first_half)
             item *= 2;
 
         helpers::print(vec, "vec");
@@ -97,3 +97,4 @@ TEST_CASE("views")
         helpers::print(std::views::iota(1, 20), "iota");
     }
 }
+
